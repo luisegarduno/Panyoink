@@ -1,10 +1,30 @@
 import sys
 import os.path
+import subprocess
+
 from wget import download
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
+# Current working directory
+cwd = os.path.dirname(os.path.realpath(__file__))
+
+title = '''
+            ██████╗  █████╗ ███╗   ██╗██╗   ██╗ ██████╗ ██╗███╗   ██╗██╗  ██╗
+            ██╔══██╗██╔══██╗████╗  ██║╚██╗ ██╔╝██╔═══██╗██║████╗  ██║██║ ██╔╝
+            ██████╔╝███████║██╔██╗ ██║ ╚████╔╝ ██║   ██║██║██╔██╗ ██║█████╔╝
+            ██╔═══╝ ██╔══██║██║╚██╗██║  ╚██╔╝  ██║   ██║██║██║╚██╗██║██╔═██╗
+            ██║     ██║  ██║██║ ╚████║   ██║   ╚██████╔╝██║██║ ╚████║██║  ██╗
+            ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
+                          ~ Website : https://gardunos.tech 
+'''
+
+print(title + "\n")
+
+
 os.system('cls' if os.name == 'nt' else 'clear')
+print(title + "\n")
+print("\n            -----------------------------------------------------------------\n\n")
 
 og = input("Enter Panopto URL: ")
 
@@ -35,7 +55,7 @@ try:
     flag = False
     responseCode = urlopen(podcast).getcode()
     if responseCode != 403:
-        #filename = input("Great. Enter filename: ")
+        # filename = input("Great. Enter filename: ")
         panyoink = downloader()
         panyoink.downloadFile(podcast)
         print("All done!")
