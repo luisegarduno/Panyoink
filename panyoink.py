@@ -50,8 +50,6 @@ class downloader:
 # ############ Option 1 : Podcast Player #############
 
 podcast = baseURL[:baseURL.index("/Pages") + 1] + f'Podcast/Syndication/{id}.mp4'
-
-print("Podcast: ", podcast)
 try:
     flag = False
     responseCode = urlopen(podcast).getcode()
@@ -66,11 +64,6 @@ try:
         panyoink.downloadFile(podcast)
         print("All done!")
 
-        #time.sleep(1.5)
-        #os.system('cls' if os.name == 'nt' else 'clear')
-        #print(title + "\n")
-        #print("\n            -----------------------------------------------------------------\n\n")
-
         flag = True
         sys.exit(0)
 
@@ -84,10 +77,6 @@ time.sleep(1.5)
 os.system('cls' if os.name == 'nt' else 'clear')
 print(title + "\n")
 print("\n            -----------------------------------------------------------------\n\n")
-
-# nope: https://smu.hosted.panopto.com/Panopto/Podcast/Syndication/4eceac41-f14f-4db9-8ec8-ac760051a930.mp4
-# works: https://smu.hosted.panopto.com/Panopto/Podcast/Syndication/ad121360-072d-415b-85ac-acbb0155d75d.mp4
-
 
 # ############ Option 2 : Embeded Player #############
 
