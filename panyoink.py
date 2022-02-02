@@ -2,6 +2,7 @@ import sys
 import time
 import os.path
 
+import wget
 from wget import download
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
@@ -35,7 +36,7 @@ id = panopto[1]
 # create a downloader class.
 class downloader:
     #  Create a custom prgress bar method
-    def progressBar(self, current, total):
+    def progressBar(self, current, total, whats):
         print("Downloading: %d%% [%d / %d] bytes" % (current / total * 100, current, total))
 
     # Create a downloadfile method
@@ -49,6 +50,8 @@ class downloader:
 # ############ Option 1 : Podcast Player #############
 
 podcast = baseURL[:baseURL.index("/Pages") + 1] + f'Podcast/Syndication/{id}.mp4'
+
+print("Podcast: ", podcast)
 try:
     flag = False
     responseCode = urlopen(podcast).getcode()
@@ -62,6 +65,11 @@ try:
         panyoink = downloader()
         panyoink.downloadFile(podcast)
         print("All done!")
+
+        #time.sleep(1.5)
+        #os.system('cls' if os.name == 'nt' else 'clear')
+        #print(title + "\n")
+        #print("\n            -----------------------------------------------------------------\n\n")
 
         flag = True
         sys.exit(0)
