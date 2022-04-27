@@ -1,3 +1,4 @@
+import re
 import sys
 import time
 import os.path
@@ -5,7 +6,7 @@ import os.path
 import wget
 from wget import download
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 
 # Current working directory
 cwd = os.path.dirname(os.path.realpath(__file__))
@@ -28,6 +29,12 @@ print(title + "\n")
 print("\n            -----------------------------------------------------------------\n\n")
 
 og = input("Enter Panopto URL: ")
+auth = input("Enter '.ASPXAUTH' Cookie: ")
+
+r = Request(og, headers = {'Cookie': ".ASPXAUTH="+auth})
+responseCheck = urlopen(r).read()
+titles = BeautifulSoup(responseCheck, "lxml").findAll("title")
+name = re.split(">|<", str(titles[0]))[2]
 
 panopto = og.split('Viewer.aspx?id=')
 baseURL = panopto[0]
@@ -45,24 +52,28 @@ class downloader:
     def downloadFile(self, url, location=""):
         # Download file and with a custom progress bar
         download(url, out=location, bar=self.progressBar)
+    
+    def download_file(self, url):
+    	s = str(name).strip().replace(' ', '')
+    	s = str(s).strip().replace('/', '-')
+    	print(f"{name}")
+    	download(url,f"{s}.mp4")
 
 
 # ############ Option 1 : Podcast Player #############
-
 podcast = baseURL[:baseURL.index("/Pages") + 1] + f'Podcast/Syndication/{id}.mp4'
 try:
     flag = False
     responseCode = urlopen(podcast).getcode()
     if responseCode != 403:
-        # filename = input("Great. Enter filename: ")
         time.sleep(1.5)
         os.system('cls' if os.name == 'nt' else 'clear')
         print(title + "\n")
         print("\n            -----------------------------------------------------------------\n\n")
 
         panyoink = downloader()
-        panyoink.downloadFile(podcast)
-        print("All done!")
+        panyoink.download_file(podcast)
+        print("\n\nAll Done!")
 
         flag = True
         sys.exit(0)
