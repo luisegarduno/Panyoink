@@ -1,9 +1,8 @@
 import re
 import sys
+import wget
 import time
 import os.path
-
-import wget
 from wget import download
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
@@ -29,9 +28,10 @@ print(title + "\n")
 print("\n            -----------------------------------------------------------------\n\n")
 
 og = input("Enter Panopto URL: ")
-auth = input("Enter '.ASPXAUTH' Cookie: ")
+authn = ".ASPXAUTH"
+authn_value = input("Enter '.ASPXAUTH' Cookie: ")
 
-r = Request(og, headers = {'Cookie': ".ASPXAUTH="+auth})
+r = Request(og, headers = {'Cookie': authn + "=" + authn_value})
 responseCheck = urlopen(r).read()
 titles = BeautifulSoup(responseCheck, "lxml").findAll("title")
 name = re.split(">|<", str(titles[0]))[2]
@@ -52,12 +52,12 @@ class downloader:
     def downloadFile(self, url, location=""):
         # Download file and with a custom progress bar
         download(url, out=location, bar=self.progressBar)
-    
+
     def download_file(self, url):
-    	s = str(name).strip().replace(' ', '')
-    	s = str(s).strip().replace('/', '-')
-    	print(f"{name}")
-    	download(url,f"{s}.mp4")
+        s = str(name).strip().replace(' ', '')
+        s = str(s).strip().replace('/', '-')
+        print(f"{name}")
+        download(url,f"{s}.mp4")
 
 
 # ############ Option 1 : Podcast Player #############
